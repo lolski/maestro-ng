@@ -207,7 +207,9 @@ class Conductor:
         action = inspect.stack()[1][3]
         things = [c.name for c in play.containers]
         self.auditor.action(things, action)
-        try:
+        try:    
+            # import code
+            # code.interact(local=locals())
             play.run()
             self.auditor.success(things, action)
         except requests.exceptions.Timeout as e:

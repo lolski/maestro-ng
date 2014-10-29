@@ -116,6 +116,7 @@ class StartTask(Task):
     def run(self):
         self.o.reset()
         error = None
+
         try:
             # TODO: None is used to indicate that no action was performed
             # because the container and its application were already
@@ -180,6 +181,7 @@ class StartTask(Task):
 
         self.o.pending('creating container from {}...'.format(
             self.container.service.short_image))
+
         self.container.ship.backend.create_container(
             image=self.container.service.image,
             hostname=self.container.name,
@@ -207,6 +209,7 @@ class StartTask(Task):
 
         self.o.pending('starting container {}...'
                        .format(self.container.id[:7]))
+
         self.container.ship.backend.start(
             self.container.id,
             binds=self.container.volumes,
@@ -214,7 +217,8 @@ class StartTask(Task):
             privileged=self.container.privileged,
             network_mode=self.container.network_mode,
             dns=self.container.dns,
-            links=self.container.links)
+            links=self.container.links,
+            volumes_from=self.container.volumes_from)
 
         # Waiting one second and checking container state again to make sure
         # initialization didn't fail.

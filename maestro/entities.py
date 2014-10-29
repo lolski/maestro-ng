@@ -53,7 +53,7 @@ class Ship(Entity):
 
     DEFAULT_DOCKER_PORT = 4243
     DEFAULT_DOCKER_VERSION = '1.10'
-    DEFAULT_DOCKER_TIMEOUT = 5
+    DEFAULT_DOCKER_TIMEOUT = 15
 
     def __init__(self, name, ip, endpoint=None, docker_port=None, timeout=None,
                  ssh_tunnel=None):
@@ -307,6 +307,11 @@ class Container(Entity):
         self.volumes = dict(
             (src or dst, dst) for dst, src in
             config.get('volumes', {}).items())
+
+        self.volumes_from = None
+        volume_list = config.get('volumes-from', [])
+        if (len(volume_list) > 0):
+            self.volumes_from = ','.join(volume_list)
 
         # Get links
         self.links = dict(

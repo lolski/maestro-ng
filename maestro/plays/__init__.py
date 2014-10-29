@@ -254,7 +254,7 @@ class Start(BaseOrchestrationPlay):
             o = self._om.get_formatter(order, prefix=(
                 BaseOrchestrationPlay.LINE_FMT.format(
                     order + 1, container.name, container.service.name,
-                    container.ship.address)))
+                    container.ship.address)))  
             self.register(tasks.StartTask(o, container, self._registries,
                                           self._refresh_images))
 
